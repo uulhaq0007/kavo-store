@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Fashion is the default scheme. Each storefront wrapper overrides these. */
+  :root,
+  [data-store='fashion'] {
+    --brand: 229 62 62;
+    --brand-dark: 197 48 48;
+    --brand-soft: 254 240 240;
+    --bar: 20 20 20;
+    --bar-ink: 255 255 255;
+  }
+  [data-store='grocery'] {
+    --brand: 103 176 46;
+    --brand-dark: 84 145 36;
+    --brand-soft: 240 248 235;
+    --bar: 103 176 46;
+    --bar-ink: 255 255 255;
+  }
+  [data-store='furniture'] {
+    --brand: 136 91 58;
+    --brand-dark: 111 73 45;
+    --brand-soft: 247 243 239;
+    --bar: 255 255 255;
+    --bar-ink: 20 20 20;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white font-sans text-[16px] leading-[1.7] text-body antialiased;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans font-semibold text-ink;
+    line-height: 1.2;
+  }
+  ::selection {
+    @apply bg-brand text-white;
+  }
+  ::-webkit-scrollbar { width: 9px; }
+  ::-webkit-scrollbar-track { @apply bg-mist; }
+  ::-webkit-scrollbar-thumb { @apply bg-brand; }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3 text-[15px] font-medium transition-all duration-300;
+  }
+  .btn-brand { @apply btn bg-brand text-white hover:bg-brand-dark; }
+  .btn-dark  { @apply btn bg-ink text-white hover:bg-brand; }
+  .btn-line  { @apply btn border border-ink text-ink hover:border-brand hover:bg-brand hover:text-white; }
+  .btn-pill  { @apply rounded-full; }
+
+  .section { @apply py-12 lg:py-[70px]; }
+
+  .sec-title {
+    @apply text-[26px] font-semibold uppercase leading-tight text-ink sm:text-[32px] lg:text-[38px];
+  }
+  .sec-sub { @apply mt-2 text-[15px] text-body; }
+
+  .field {
+    @apply w-full border border-line bg-white px-5 py-3 text-[15px] text-ink outline-none
+           transition-colors duration-200 placeholder:text-body/70 focus:border-brand;
+  }
+  .field-error { @apply border-red-400 focus:border-red-500; }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible { opacity: 1; transform: none; }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
